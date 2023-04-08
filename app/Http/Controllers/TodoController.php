@@ -79,10 +79,26 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id)    
     {
         $todo = Todo::findOrFail($id);
-        $todo->status = "done";
+
+        if ($todo->user_id !== Auth::user()->id)
+        {
+            return redirect('dashboard')->withErrors([
+                "message" => "Invalid todo requested!"
+            ]);
+        }
+
+        if (!empty($request->title) && !empty($request->description))
+        {
+            $todo->title = $request->title;
+            $todo->description = $request->description;
+        }
+        else
+        {
+            $todo->status = "done";
+        }
         $todo->save();
 
         return redirect('dashboard')->with('success', "Todo updated successfully!");
@@ -94,8 +110,15 @@ class TodoController extends Controller
     public function destroy(string $id)
     {
         $todo = Todo::findOrFail($id);
+
+        if ($todo->user_id !== Auth::user()->id)
+        {
+            return redirect('dashboard')->withErrors([
+                "message" => "Invalid todo requested!"
+            ]);
+        }
+
         $todo->delete();
-        
         return redirect('dashboard')->with('success', "Todo deleted successfully!");
     }
 }

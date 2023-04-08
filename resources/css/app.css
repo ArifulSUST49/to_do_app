@@ -8,6 +8,8 @@
 .mi-list .list-item{
     border-bottom: 2px solid #e3e3e3;
     padding: 10px 10px;
+    display: inline-flex;
+    width: 100%;
 }
 
 .mi-list .list-item:hover{
