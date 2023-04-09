@@ -100,8 +100,10 @@ class TodoController extends Controller
             $todo->status = "done";
         }
         $todo->save();
-
+       //pending item editing
         return redirect('dashboard')->with('success', "Todo updated successfully!");
+
+
     }
 
     /**
@@ -120,5 +122,7 @@ class TodoController extends Controller
 
         $todo->delete();
         return redirect('dashboard')->with('success', "Todo deleted successfully!");
+
+
     }
 }
