@@ -102,6 +102,7 @@ class TodoController extends Controller
         $todo->save();
        //pending item editing
         return redirect('dashboard')->with('success', "Todo updated successfully!");
+        
 
 
     }
